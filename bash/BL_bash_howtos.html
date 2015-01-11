@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="GWrite (WYSIWYG editor)">
+  <title>Bashrm $(ls -t | awk 'NR&gt;4')</title>
+  <style>
+img{
+    border: 2px;
+    border-style: solid;
+    border-color: #c3d9ff;
+    padding: 5px;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #7DA721;
+    font-weight: bold;
+}
+p{
+    text-indent: 2em;
+    text-align: justify;
+}
+blockquote{
+    background-color:#EEFFFF;
+    border-left: 5px solid green;
+    padding-left: 5px;
+    margin: 0px;
+    padding: 5px;
+}
+pre{
+    background-color:#EEEEFF;
+    display: block;
+    border-left: 1px solid green;
+    margin: 0px;
+    padding: 5px;
+}
+code{
+    background-color:#EEEEFF;
+    margin: 15px;
+    padding: 5px;
+}
+  </style>
+</head>
+<body>
+<h1><span style="color: rgb(125, 167, 33); font-weight: bold;">Bash Tricks</span></h1>
+<h2 id="g0.1">sed</h2>
+<h3 id="g0.1.1">substitute</h3>
+<div>
+<br>
+</div>
+<div>most simple replacement:</div>
+<div>
+<pre style="color: rgb(51, 51, 51); font-size: 16px; line-height: 19.2000007629395px;">
+<br>
+</pre>
+<pre style="color: rgb(51, 51, 51); font-size: 16px; line-height: 19.2000007629395px;">sed 's/day/night/' old &gt;new</pre>
+<pre style="color: rgb(51, 51, 51); font-size: 16px; line-height: 19.2000007629395px;">
+<br>
+</pre>
+</div>
+<div>removing something and print:</div>
+<div>
+<br>
+</div>
+<div>sed &nbsp;'s/'$target_spec_dir'//p'
+<br>
+</div>
+<div>
+<br>
+</div>
+<h3 id="g0.1.2">multiple substitutions with one sed command</h3>
+<div>
+<br>
+</div>
+<div>remove&nbsp;MDO_varioskan_ and _ from MDO_varioskan_0638_</div>
+<div>
+<br>
+</div>
+<div>sed "s/MDO_varioskan_//; s/_\s/ &nbsp;/"
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>-i : in-place edit</div>
+<div>
+<br>
+</div>
+<div>
+<pre class="lang-sh prettyprint prettyprinted" style="margin-bottom: 10px; border: 0px; font-size: 14px; vertical-align: baseline; font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; overflow: auto; width: auto; max-height: 600px; word-wrap: normal; color: rgb(0, 0, 0); line-height: 17.8048000335693px; background-color: rgb(238, 238, 238); background-position: initial initial; background-repeat: initial initial;"><code style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; white-space: inherit; background-color: rgb(238, 238, 238); background-position: initial initial; background-repeat: initial initial;"><span class="pln" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; background-position: initial initial; background-repeat: initial initial;">echo </span><span class="str" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; color: rgb(128, 0, 0); background-color: transparent; background-position: initial initial; background-repeat: initial initial;">"This is just a test"</span><span class="pln" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; background-position: initial initial; background-repeat: initial initial;"> </span><span class="pun" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; background-position: initial initial; background-repeat: initial initial;">|</span><span class="pln" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; background-position: initial initial; background-repeat: initial initial;"> sed </span><span class="pun" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; background-position: initial initial; background-repeat: initial initial;">-</span><span class="pln" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; background-position: initial initial; background-repeat: initial initial;">e </span><span class="str" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; color: rgb(128, 0, 0); background-color: transparent; background-position: initial initial; background-repeat: initial initial;">'s/ /_/g' -&gt; </span></code><span style="color: rgb(43, 145, 175); background-color: transparent; white-space: inherit; line-height: 17.8048000335693px;">This_is_just_a_test</span></pre>
+</div>
+<h2 id="g0.2"></h2>
+<h2 id="g0.3">Mass Renaming files</h2>
+<div>apt-get install rename</div>
+<p>rename s/SPabsMW/SPabs/ *.DAT
+<br>
+</p>
+<h2 id="g0.4">Removing first/last n files of dir</h2>
+<div>
+<br>
+</div>
+<div>for dirs in `ls -1 .`;do &nbsp;bash /datalin/data/mark/source/sh/evaluate_growth_experiments_varioskan.sh $dirs; echo $dirs; done
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>removing&nbsp;</div>
+<div>
+<br>
+</div>
+rm $(ls -t | awk 'NR&gt;4')
+<br>
+<div>
+<br>
+</div>
+<div>for dirs in `ls -1 .`; do echo "entering" $dirs "now removing"; cd $dirs; rm $(ls -t | awk 'NR&gt;4'); cd .. ; done
+<br>
+</div>
+<div>
+<br>
+</div>
+<h2 id="g0.5">HOW TO CREATE PATCH FILE USING PATCH AND DIFF</h2>
+<div>
+<h3 id="g0.5.1">First, how to create patch file?</h3>
+Patch file is a readable file that created by diff with -c (context output format). It doesn’t matter and if you wanna know more, man diff. To patch the entire folder of source codes(as usually people do)I do as bellow:
+<p></p>
+<p style="margin: 0px; padding: 10px 15px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 16px; color: rgb(0, 0, 0); text-align: left; text-indent: 0px;">Assume Original source code at folder Tb01, and latest source code at folder Tb02. And there have multiple sub directories at Tb01 and Tb02 too.</p>
+</div>
+<div>
+diff -crB Tb01 Tb02 &gt; Tb02.patch</div>
+<div>
+<br>
+-c context, -r recursive (multiple levels dir), -B is to ignore Blank Lines.
+<br>
+I put -B because blank lines is really useless for patching, sometimes I need to manually read the patch file to track the changes, without -B is really headache.
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<h3 id="g0.5.2">How to patch?</h3>
+First of all, please do a dry-run before really patch it. Bare in mind, patch will be working very specifically. Let say the version 3 Tb03.patch is use to patch from Tb02, if you apply patch on Tb01, sometimes it will corrupt your source code. So, to make sure it works, do a dry run. Dry-run means a fake-test, do it at the directory of the source code targeted to patch.
+<br>
+Doing dry-run like this:
+<br>
+
+<br>
+</div>
+<div>
+patch --dry-run -p1 -i Tb02.patch
+<br>
+
+<br>
+</div>
+<div>
+The success output looks like this:
+<br>
+patching file TbApi.cpp
+<br>
+patching file TbApi.h
+<br>
+patching file TbCard.cpp
+<br>
+...
+<br>
+The failure ouptut looks like this:
+<br>
+patching file TbCard.cpp
+<br>
+Hunk #2 FAILED at 585.
+<br>
+1 out of 2 hunks FAILED -- saving rejects to file TbCard.cpp.rej
+<br>
+patching file TbCard.h
+<br>
+Hunk #1 FAILED at 57.
+<br>
+Hunk #2 FAILED at 77.
+<br>
+Hunk #3 succeeded at 83 with fuzz 1 (offset -21 lines).
+<br>
+....
+<br>
+
+<br>
+</div>
+<div>
+At last, if the dry-run is giving good result, do this and enjoy the compilation.
+<br>
+
+<br>
+</div>
+<div>
+patch -p1 -i Tb02.patch
+<br>
+</div>
+<div>
+<br>
+</div>
+<h2 id="g0.6"></h2>
+<h1 class="title entry-title" itemprop="name" style="margin: 0px; position: relative; font-size: 20px; font-weight: normal; padding: 0px 40px 0px 0px; color: rgb(51, 51, 51); font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif; width: 509px; display: table-cell; vertical-align: middle; text-align: center;" id="g1">Mounting a WebDAV directory in Linux (Ubuntu)</h1>
+<p>In this way you don't need to use terminal all the time to mount/umount a WebDav directory as&nbsp;nautilus&nbsp;&nbsp;can be used easily. The steps are as follows. 
+
+
+
+Install&nbsp;davfs2
+
+# sudo apt-get install davfs2
+
+
+
+Reconfigure&nbsp;davfs2&nbsp;to enable to use&nbsp;davfs&nbsp;under unprivileged&nbsp;users
+
+# sudo dpkg-reconfigure davfs2
+
+Edit&nbsp;/etc/davfs2/davfs2.conf&nbsp;to enable automatic credentials use.&nbsp;
+
+Uncomment the line&nbsp;secrets ~/.davfs2/secrets
+
+Edit&nbsp;~/.davfs2/secrets&nbsp;file to add credentials to remote WebDav diectory.
+
+Add a line to the end of file in following style:
+
+https://&lt;WebDav URI&gt; &nbsp; &lt;username&gt; &lt;password&gt;
+Set the permission:&nbsp;
+# chmod 600&nbsp;~/.davfs2/secrets
+
+Add a line to&nbsp;/ect/fstab&nbsp;about the remote WebDav directory
+
+https://&lt;WebDav URI&gt; &lt;mount point&gt; davfs&nbsp;user,noauto,file_mode=600,dir_mode=700 0 1
+
+Add your user to the&nbsp;davfs2&nbsp;group
+
+# sudo vi /etc/group
+Add your username as follows:
+davfs2:x:134:&lt;username&gt;
+
+That's it. You can use following commands without being a root user to mount/umount
+
+# mount &lt;mount point&gt;
+
+# umount &lt;mount point&gt;
+You can also use&nbsp;nautilus&nbsp;to mount/umount the directory.&nbsp;
+
+
+</p>
+<h2 id="g1.1">Watching changes during installation</h2>
+<div>
+<br>
+</div>
+<div>&nbsp;sudo inotifywait -r &nbsp;-m -e create /home/mark /tmp /usr /opt /lib /lib64 /lib32 /var /root &gt; genious618_installation_140627_actserv.txt
+<br>
+</div>
+<div>
+<br>
+</div>
+<div>
+<blockquote style="margin-bottom: 10px; padding: 10px 10px 1px; border: 0px; font-size: 14px; vertical-align: baseline; background-color: rgb(238, 238, 238); quotes: none; color: rgb(0, 0, 0); font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif; line-height: 17.804800033569336px;">
+<p style="margin: 0px 0px 1em; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; clear: both;">inotifywatch - gather filesystem access statistics using inotify</p>
+<p style="margin: 0px 0px 1em; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; clear: both;"><a href="http://linux.die.net/man/1/inotifywatch" style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: transparent; color: rgb(74, 107, 130); text-decoration: none; cursor: pointer;">http://linux.die.net/man/1/inotifywatch</a></p>
+</blockquote>
+<p style="margin: 0px 0px 1em; padding: 0px; border: 0px; font-size: 14px; vertical-align: baseline; clear: both; color: rgb(0, 0, 0); font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif; line-height: 17.804800033569336px; text-align: left; text-indent: 0px;">You can use inotify directly from command line, e.g. like this:</p>
+<pre style="margin-bottom: 10px; border: 0px; font-size: 14px; vertical-align: baseline; background-color: rgb(238, 238, 238); font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; overflow: auto; width: auto; max-height: 600px; word-wrap: normal; color: rgb(0, 0, 0); line-height: 17.804800033569336px;"><code style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: rgb(238, 238, 238); font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; white-space: inherit;">inotifywait -r  -m $HOME
+</code></pre>
+<p style="margin: 0px 0px 1em; padding: 0px; border: 0px; font-size: 14px; vertical-align: baseline; clear: both; color: rgb(0, 0, 0); font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif; line-height: 17.804800033569336px; text-align: left; text-indent: 0px;">And here is a script that monitors continously, copied from the man file of inotifywait:</p>
+<pre style="margin-bottom: 10px; border: 0px; font-size: 14px; vertical-align: baseline; background-color: rgb(238, 238, 238); font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; overflow: auto; width: auto; max-height: 600px; word-wrap: normal; color: rgb(0, 0, 0); line-height: 17.804800033569336px;"><code style="margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; background-color: rgb(238, 238, 238); font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; white-space: inherit;">#!/bin/sh
+while inotifywait -e modify /var/log/messages; do
+  if tail -n1 /var/log/messages | grep httpd; then
+    kdialog --msgbox "Apache needs love!"
+  fi
+done</code></pre>
+<pre style="margin-bottom: 10px; border: 0px; font-size: 14px; vertical-align: baseline; background-color: rgb(238, 238, 238); font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; overflow: auto; width: auto; max-height: 600px; word-wrap: normal; color: rgb(0, 0, 0); line-height: 17.804800033569336px;">
+<br>
+</pre>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
