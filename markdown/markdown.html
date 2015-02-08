@@ -1,0 +1,139 @@
+<h1>A First Level Header</h1>
+
+<h2>A Second Level Header</h2>
+
+<p>Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.</p>
+
+<p>The quick brown fox jumped over the lazy
+dog's back.</p>
+
+<h3>Header 3</h3>
+
+<blockquote>
+  <p>This is a blockquote.</p>
+
+<p>This is the second paragraph in the blockquote.</p>
+
+<h2>This is an H2 in a blockquote</h2>
+</blockquote>
+
+<p>Some of these words <em>are emphasized</em>.
+Some of these words <em>are emphasized also</em>.</p>
+
+<p>Use two asterisks for <strong>strong emphasis</strong>.
+Or, if you prefer, <strong>use two underscores instead</strong>.</p>
+
+<h2>Auto chapters</h2>
+
+<h3>1. subchapter 1</h3>
+
+<p>This is the first subchapter</p>
+
+<h3>1. subchapter 2</h3>
+
+<h2>LISTS</h2>
+
+<h3>Unordered (bulleted) lists use asterisks, pluses, and hyphens (*, +, and -) as list markers. These three markers are interchangable; this:</h3>
+
+<ul>
+<li>Candy.</li>
+<li>Gum.</li>
+<li><p>Booze.
+this:</p></li>
+<li><p>Candy.</p></li>
+<li>Gum.</li>
+<li><p>Booze.
+and this:</p></li>
+<li><p>Candy.</p></li>
+<li>Gum.</li>
+<li>Booze.
+all produce the same output:</li>
+</ul>
+
+<h3>Ordered (numbered) lists use regular numbers, followed by periods, as list markers:</h3>
+
+<ol>
+<li>Red</li>
+<li>Green</li>
+<li>Blue</li>
+</ol>
+
+<h3>Auto lists</h3>
+
+<ol>
+<li>Yellow</li>
+<li>White</li>
+<li>Black</li>
+</ol>
+
+<p>If you put blank lines between items, you’ll get <p> tags for the list item text. You can create multi-paragraph list items by indenting the paragraphs by 4 spaces or 1 tab:</p>
+
+<ul>
+<li><p>A list item.</p>
+
+<p>With multiple paragraphs.</p></li>
+<li><p>Another item in the list.</p></li>
+</ul>
+
+<p>LINKS</p>
+
+<p>Markdown supports two styles for creating links: inline and reference. With both styles, you use square brackets to delimit the text you want to turn into a link.</p>
+
+<p>Inline-style links use parentheses immediately after the link text. For example:</p>
+
+<p>This is an <a href="http://example.com/">example link</a>.</p>
+
+<p>Optionally, you may include a title attribute in the parentheses:</p>
+
+<p>This is an <a href="http://example.com/" title="With a Title">example link</a>.</p>
+
+<p>Reference-style links allow you to refer to your links by names, which you define elsewhere in your document:</p>
+
+<p>I get 10 times more traffic from <a href="http://google.com/" title="Google">Google</a> than from
+<a href="http://search.yahoo.com/" title="Yahoo Search">Yahoo</a> or <a href="http://search.msn.com/" title="MSN Search">MSN</a>.</p>
+
+<p>The title attribute is optional. Link names may contain letters, numbers and spaces, but are not case sensitive:</p>
+
+<p>I start my morning with a cup of coffee and
+<a href="http://www.nytimes.com/">The New York Times</a>.</p>
+
+<p>IMAGES</p>
+
+<p>Image syntax is very much like link syntax.</p>
+
+<p>Inline (titles are optional):</p>
+
+<p><img src="/path/to/img.jpg" alt="alt text" title="Title" />
+Reference-style:</p>
+
+<p><img src="/path/to/img.jpg" alt="alt text" title="Title" /></p>
+
+<p>CODE</p>
+
+<p>In a regular paragraph, you can create code span by wrapping text in backtick quotes. Any ampersands (&amp;) and angle brackets (&lt; or >) will automatically be translated into HTML entities. This makes it easy to use Markdown to write about HTML example code:</p>
+
+<p>I strongly recommend against using any <code>&lt;blink&gt;</code> tags.</p>
+
+<p>I wish SmartyPants used named entities like <code>&amp;mdash;</code>
+instead of decimal-encoded entites like <code>&amp;#8212;</code>.</p>
+
+<p>To specify an entire block of pre-formatted code, indent every line of the block by 4 spaces or 1 tab. Just like with code spans, &amp;, &lt;, and > characters will be escaped automatically.</p>
+
+<p>Markdown:</p>
+
+<p>If you want your page to validate under XHTML 1.0 Strict,
+you've got to put paragraph tags in your blockquotes:</p>
+
+<pre><code>&lt;blockquote&gt;
+    &lt;p&gt;For example.&lt;/p&gt;
+&lt;/blockquote&gt;
+</code></pre>
+
+<h2>Tables</h2>
+
+<p>First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column</p>

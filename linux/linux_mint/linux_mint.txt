@@ -1,0 +1,30 @@
+
+# linux mint installation
+
+packages:
+
+alchemy
+sudo apt-get install gimp gimp-data-extras inkscape gwrite geany meld git gitk baobab cheese
+
+sudo apt-get install python-pip python-qt4 sqliteman
+
+sudo apt-get install mc vim ssh
+
+# install extras sources not required in mint
+
+sudo apt-get install vlc flac lame libdvdread4
+sudo /usr/share/doc/libdvdread4/install-css.sh
+
+sudo apt-get install mplayer parole
+
+sudo apt-get install wireshark 
+
+chromium plugins
+
+adblock, dlhelper, ....
+
+lo manager
+
+crptsetup
+
+
