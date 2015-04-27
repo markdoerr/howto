@@ -14,7 +14,7 @@
     mkdir ~/.VirtualBox/HardDisks/
     
     # Sometimes you need to give special permissions ...
-    sudo chmod 666 /dev/sdb*
+    sudo chmod 666 /dev/sdc*
     sudo chown `whoami` ~/.VirtualBox/HardDisks/usb.vdmk
     
 When creating a new VM, just point Harddrive to existing drive: __~/.VirtualBox/HardDisks/usb.vdmk__

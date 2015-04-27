@@ -43,6 +43,8 @@ Auto chapters
 
 to compile this use pandoc ( sudo apt-get install pandoc )
 
+pandoc -t html5 -N < markdown_syntax.md -o markdown_syntax.html
+
 pandoc --number-sections < markdown_syntax.md > markdown_syntax.html
 
 LISTS

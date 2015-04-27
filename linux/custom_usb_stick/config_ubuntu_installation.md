@@ -5,47 +5,50 @@
 
 # preperations
 
-sudo mkdir /mnt/ubuntu_flash/
+    sudo mkdir /mnt/ubuntu_flash/
+    sudo mount -o loop /home/mark/temp/custom_mint/filesystem.squashfs /mnt/ubuntu_flash/
 
-sudo mount -o loop /home/mark/temp/custom_mint/filesystem.squashfs /mnt/ubuntu_flash/
+    sudo mkdir /home/mark/temp/custom_mint/squashfs
+    export mint171=/home/mark/temp/custom_mint/squashfs
 
-sudo mkdir /home/mark/temp/custom_mint/squashfs
-export mint171=/home/mark/temp/custom_mint/squashfs
+    sudo cp -a /mnt/ubuntu_flash/* $mint171/
 
-sudo cp -a /mnt/ubuntu_flash/* $mint171/
+    sudo mount --rbind /dev $mint171/dev/
+    sudo mount --rbind /sys $mint171/sys/
+    sudo mount --rbind /proc $mint171/proc/
 
-sudo mount --rbind /dev $mint171/dev/
-sudo mount --rbind /sys $mint171/sys/
-sudo mount --rbind /proc $mint171/proc/
-
-sudo cp /etc/resolv.conf $mint171/etc/
+    sudo cp /etc/resolv.conf $mint171/etc/
 
 # place policy-rc.d in parent directory
-sudo cp policy-rc.d $mint171/usr/sbin/
-sudo chmod a+x $mint171/usr/sbin/policy-rc.d
+    sudo cp policy-rc.d $mint171/usr/sbin/
+    sudo chmod a+x $mint171/usr/sbin/policy-rc.d
 
 # X11 setup
 
-sudo mkdir -p $mint171/tmp/.X11-unix
-sudo mount --rbind /tmp/.X11-unix $mint171/tmp/.X11-unix/
+    sudo mkdir -p $mint171/tmp/.X11-unix
+    sudo mount --rbind /tmp/.X11-unix $mint171/tmp/.X11-unix/
 
-sudo xhost + local:
-sudo xhost + localhost
+    sudo xhost + local:
+    sudo xhost + localhost
 
 # cp all required files to new file system
-sudo cp ../truecrypt-7.1a-setup-x86 squashfs/tmp/
+    sudo mkdir squashfs/home/to_inst
+    sudo cp /truecrypt-7.1a-setup-x86 squashfs/home/to_inst
 
-sudo chroot $mint171
+# now changing root
 
-export DISPLAY=:0
-dpkg-divert --local --rename --add /sbin/initctl
-ln -s /bin/true /sbin/initctl
+    sudo chroot $mint171
 
-... make changes ...
+    export DISPLAY=:0
+    dpkg-divert --local --rename --add /sbin/initctl
+    ln -s /bin/true /sbin/initctl
 
-apt-get update
+#... makeing changes ...
 
-# s. linux_mint.txt
+    # before installation, please update
+    apt-get update
+
+# s. linux-mint/linux_mint.txt
 
 when ready:
 
@@ -57,6 +60,7 @@ apt-get autoremove
 rm /sbin/initctl
 rm -f $mint171/etc/resolv.conf
 
+rm -R /home/mark
 exit
 
 sudo umount -l  $mint171/tmp/.X11-unix/
@@ -65,7 +69,8 @@ sudo umount -l  $mint171/proc/
 sudo umount  -l $mint171/dev/
 
 sudo mv $mint171/usr/sbin/policy-rc.d $mint171/usr/sbin/policy-rc.d_disa
-
+ mv filesystem.squashfs filesystem.squashfs_orig
+ 
 sudo mksquashfs $mint171 filesystem.squashfs -wildcards -e boot/vmlinuz-* boot/initrd.img-*
 
 sudo cp filesystem.squashfs /media/mark/Transcend/casper
@@ -103,6 +108,9 @@ root@linux# xterm
 sudo mount --bind /dev ./ubuntu_flash/dev/
 sudo mount --bind /sys ./ubuntu_flash/sys/ 
 sudo mount --bind /proc ./ubuntu_flash/proc/
+
+## booting USB stick with Virtual Box
+ s. Virtual-box how-to
 
 ## Resizing the persistant storage of the USB stick
 
