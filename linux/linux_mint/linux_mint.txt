@@ -5,20 +5,22 @@
 
     alchemy
     
-    sudo apt-get install gimp gimp-data-extras inkscape gwrite geany meld git gitk baobab cheese
-
+    sudo apt-get install mc vim ssh
+    
+    sudo apt-get install gimp-data-extras inkscape gwrite geany meld git gitk baobab cheese
+    
     sudo apt-get install python-pip python-qt4 sqliteman
 
-    sudo apt-get install mc vim ssh
+    sudo apt-get install wireshark 
+    sudo apt-get install chromium-browser
+
+    sudo apt-get install flac lame  mplayer parole
 
 ## install extras sources not required in mint
-
-    sudo apt-get install vlc flac lame libdvdread4
+    
+    # libdvdread could be already installed ...
+    sudo apt-get install libdvdread4
     sudo /usr/share/doc/libdvdread4/install-css.sh
-
-    sudo apt-get install mplayer parole
-
-    sudo apt-get install wireshark cryptsetup
 
 ## chromium plugins
 

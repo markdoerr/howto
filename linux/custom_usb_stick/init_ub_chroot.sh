@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export mint171=/home/mark/temp/custom_mint/squashfs
 
 mount --rbind /dev $mint171/dev/

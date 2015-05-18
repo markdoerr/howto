@@ -1,9 +1,11 @@
 
 
 # howto describing the procedure to generate a custom ubuntu system
-# last modified: 150201
+    last modified: 150517
+    
+## preperations
 
-# preperations
+    consider to partition the usb stick to max 32GB
 
     sudo mkdir /mnt/ubuntu_flash/
     sudo mount -o loop /home/mark/temp/custom_mint/filesystem.squashfs /mnt/ubuntu_flash/
@@ -12,6 +14,7 @@
     export mint171=/home/mark/temp/custom_mint/squashfs
 
     sudo cp -a /mnt/ubuntu_flash/* $mint171/
+    sudo umount /mnt/ubuntu_flash
 
     sudo mount --rbind /dev $mint171/dev/
     sudo mount --rbind /sys $mint171/sys/
@@ -33,48 +36,54 @@
 
 # cp all required files to new file system
     sudo mkdir squashfs/home/to_inst
-    sudo cp /truecrypt-7.1a-setup-x86 squashfs/home/to_inst
-
+    sudo cp ./truecrypt-7.1a-setup-x64 squashfs/home/to_inst
+    sudo cp -a Gimp-painter\ Brush\ Kit/ squashfs/home/to_inst
+    
 # now changing root
 
     sudo chroot $mint171
 
-    export DISPLAY=:0
-    dpkg-divert --local --rename --add /sbin/initctl
-    ln -s /bin/true /sbin/initctl
+    export DISPLAY=:0 ;     dpkg-divert --local --rename --add /sbin/initctl ;  ln -s /bin/true /sbin/initctl
 
-#... makeing changes ...
+## ... makeing changes ...
 
     # before installation, please update
     apt-get update
 
-# s. linux-mint/linux_mint.txt
+## installation new packages 
+  s. linux-mint/linux_mint.txt
 
 when ready:
+    
+    # check if user 999 exists, if yes, remove with usermod -u 500 $hit
+    awk -F: '$3 == 999' /etc/passwd
 
-apt-get clean
-apt-get autoclean
-apt-get autoremove
+    apt-get clean;  apt-get autoclean ; apt-get autoremove; rm -rf /tmp/*
+
+    rm /var/lib/dbus/machine-id ; rm /sbin/initctl ; dpkg-divert --rename --remove /sbin/initctl ; rm -R /home/mark; 
+    umount /proc || umount -lf /proc ; umount /sys ;umount /dev/pts   ;exit
+
+    #sudo rm -f $mint171/etc/resolv.conf
+
+    sudo umount -l  $mint171/tmp/.X11-unix/; sudo umount  -l  $mint171/sys/ ; sudo umount -l  $mint171/proc/ ; sudo umount  -l $mint171/dev/
+
+    sudo mv $mint171/usr/sbin/policy-rc.d $mint171/usr/sbin/policy-rc.d_disa
 
 
-rm /sbin/initctl
-rm -f $mint171/etc/resolv.conf
-
-rm -R /home/mark
-exit
-
-sudo umount -l  $mint171/tmp/.X11-unix/
-sudo umount  -l  $mint171/sys/
-sudo umount -l  $mint171/proc/
-sudo umount  -l $mint171/dev/
-
-sudo mv $mint171/usr/sbin/policy-rc.d $mint171/usr/sbin/policy-rc.d_disa
- mv filesystem.squashfs filesystem.squashfs_orig
+    mv filesystem.squashfs filesystem.squashfs_orig
  
-sudo mksquashfs $mint171 filesystem.squashfs -wildcards -e boot/vmlinuz-* boot/initrd.img-*
+    sudo mksquashfs $mint171 filesystem.squashfs
+    #sudo mksquashfs $mint171 filesystem.squashfs -wildcards -e boot/vmlinuz-* boot/initrd.img-*
 
-sudo cp filesystem.squashfs /media/mark/Transcend/casper
-
+    # this is required by the installer
+    printf $(sudo du -sx --block-size=1 $mint171 | cut -f1) > filesystem.size
+    sudo cp filesystem.size /media/mark/MINTUSB/casper; sudo cp filesystem.squashfs /media/mark/MINTUSB/casper
+    
+    
+    # copy kernel and inird
+     sudo cp $mint171/boot/vmlinuz-3.13.0-37-generic /media/mark/MINTUSB/casper/vmlinuz
+     sudo cp $mint171/boot/initrd.img-3.13.0-37-generic /media/mark/MINTUSB/casper/initrd.lz
+     # or .lz (check type)
 
 Grafische Programme in einer chroot-Umgebung aufrufen
 23. Oktober 2005

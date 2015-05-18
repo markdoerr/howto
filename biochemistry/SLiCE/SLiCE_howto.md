@@ -11,3 +11,8 @@
 ## assembly molar ratio
 
 1 backbone : 4 inserts
+
+## expression
+
+to have good expression the end of the gene should not be too far away from the terminator.
+Double stop codons can also help to improve the expression yield.
