@@ -3,10 +3,12 @@
 ## Deploying django
 
 ### setup virtualenv
-
+    #pip install virtualenv
     pip install virtualenv virtualenvwrapper
-    export WORKON_HOME=~/Envs
+    export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
+    #export WORKON_HOME=~/Envs
+    #source /usr/local/bin/virtualenvwrapper.sh
 
     # Create a virtual environment:
     $ mkvirtualenv venv
@@ -14,14 +16,20 @@ This creates the venv folder inside ~/Envs.
 
 Work on a virtual environment:
     $ workon venv
+    
 virtualenvwrapper provides tab-completion on environment names. It really helps when you have a lot of environments and have trouble remembering their names.
 
+    
 workon also deactivates whatever environment you are currently in, so you can quickly switch between environments.
 
 Deactivating is still the same:
     $ deactivate
 To delete:
     $ rmvirtualenv venv
+
+### installing requirements 
+$ cd to venv
+$ pip install -r requirements.txt 
 
 ### freezing venv requirements
 pip freeze > lara_venv_requirements.txt
