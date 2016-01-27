@@ -11,37 +11,38 @@
     sudo mount -o loop /home/mark/temp/custom_mint/filesystem.squashfs /mnt/ubuntu_flash/
 
     sudo mkdir /home/mark/temp/custom_mint/squashfs
-    export mint171=/home/mark/temp/custom_mint/squashfs
+    export mint172=/home/mark/temp/custom_mint/squashfs
 
-    sudo cp -a /mnt/ubuntu_flash/* $mint171/
+    sudo cp -a /mnt/ubuntu_flash/* $mint172/
     sudo umount /mnt/ubuntu_flash
 
-    sudo mount --rbind /dev $mint171/dev/
-    sudo mount --rbind /sys $mint171/sys/
-    sudo mount --rbind /proc $mint171/proc/
+    sudo mount --rbind /dev $mint172/dev/
+    sudo mount --rbind /sys $mint172/sys/
+    sudo mount --rbind /proc $mint172/proc/
 
-    sudo cp /etc/resolv.conf $mint171/etc/
+    sudo cp /etc/resolv.conf $mint172/etc/
 
 # place policy-rc.d in parent directory
-    sudo cp policy-rc.d $mint171/usr/sbin/
-    sudo chmod a+x $mint171/usr/sbin/policy-rc.d
+    sudo cp policy-rc.d $mint172/usr/sbin/
+    sudo chmod a+x $mint172/usr/sbin/policy-rc.d
 
 # X11 setup
 
-    sudo mkdir -p $mint171/tmp/.X11-unix
-    sudo mount --rbind /tmp/.X11-unix $mint171/tmp/.X11-unix/
+    sudo mkdir -p $mint172/tmp/.X11-unix
+    sudo mount --rbind /tmp/.X11-unix $mint172/tmp/.X11-unix/
 
     sudo xhost + local:
     sudo xhost + localhost
 
 # cp all required files to new file system
     sudo mkdir squashfs/home/to_inst
-    sudo cp ./truecrypt-7.1a-setup-x64 squashfs/home/to_inst
-    sudo cp -a Gimp-painter\ Brush\ Kit/ squashfs/home/to_inst
+    sudo cp ./truecrypt-7.1a-setup-x64 $mint172/home/to_inst
+    sudo cp ./install_useful_packages.sh $mint172/home/to_inst
+    sudo cp -a Gimp-painter\ Brush\ Kit/ $mint172/home/to_inst
     
 # now changing root
 
-    sudo chroot $mint171
+    sudo chroot $mint172
 
     export DISPLAY=:0 ;     dpkg-divert --local --rename --add /sbin/initctl ;  ln -s /bin/true /sbin/initctl
 
@@ -63,26 +64,26 @@ when ready:
     rm /var/lib/dbus/machine-id ; rm /sbin/initctl ; dpkg-divert --rename --remove /sbin/initctl ; rm -R /home/mark; 
     umount /proc || umount -lf /proc ; umount /sys ;umount /dev/pts   ;exit
 
-    #sudo rm -f $mint171/etc/resolv.conf
+    #sudo rm -f $mint172/etc/resolv.conf
 
-    sudo umount -l  $mint171/tmp/.X11-unix/; sudo umount  -l  $mint171/sys/ ; sudo umount -l  $mint171/proc/ ; sudo umount  -l $mint171/dev/
+    sudo umount -l  $mint172/tmp/.X11-unix/; sudo umount  -l  $mint172/sys/ ; sudo umount -l  $mint172/proc/ ; sudo umount  -l $mint172/dev/
 
-    sudo mv $mint171/usr/sbin/policy-rc.d $mint171/usr/sbin/policy-rc.d_disa
+    sudo mv $mint172/usr/sbin/policy-rc.d $mint172/usr/sbin/policy-rc.d_disa
 
 
     mv filesystem.squashfs filesystem.squashfs_orig
  
-    sudo mksquashfs $mint171 filesystem.squashfs
-    #sudo mksquashfs $mint171 filesystem.squashfs -wildcards -e boot/vmlinuz-* boot/initrd.img-*
+    sudo mksquashfs $mint172 filesystem.squashfs
+    #sudo mksquashfs $mint172 filesystem.squashfs -wildcards -e boot/vmlinuz-* boot/initrd.img-*
 
     # this is required by the installer
-    printf $(sudo du -sx --block-size=1 $mint171 | cut -f1) > filesystem.size
+    printf $(sudo du -sx --block-size=1 $mint172 | cut -f1) > filesystem.size
     sudo cp filesystem.size /media/mark/MINTUSB/casper; sudo cp filesystem.squashfs /media/mark/MINTUSB/casper
     
     
     # copy kernel and inird
-     sudo cp $mint171/boot/vmlinuz-3.13.0-37-generic /media/mark/MINTUSB/casper/vmlinuz
-     sudo cp $mint171/boot/initrd.img-3.13.0-37-generic /media/mark/MINTUSB/casper/initrd.lz
+     sudo cp $mint172/boot/vmlinuz-3.13.0-37-generic /media/mark/MINTUSB/casper/vmlinuz
+     sudo cp $mint172/boot/initrd.img-3.13.0-37-generic /media/mark/MINTUSB/casper/initrd.lz
      # or .lz (check type)
 
 Grafische Programme in einer chroot-Umgebung aufrufen

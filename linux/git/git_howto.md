@@ -6,7 +6,10 @@
     git reset --hard
   
 ## renaming branch
+    # in current branch
     git branch -m <newname>
+    # general method
+    git branch -m <oldname> <newname>
 
 ## github and development branches
 

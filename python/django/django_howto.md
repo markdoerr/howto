@@ -20,7 +20,7 @@ Work on a virtual environment:
 virtualenvwrapper provides tab-completion on environment names. It really helps when you have a lot of environments and have trouble remembering their names.
 
     
-workon also deactivates whatever environment you are currently in, so you can quickly switch between environments.
+work on also deactivates whatever environment you are currently in, so you can quickly switch between environments.
 
 Deactivating is still the same:
     $ deactivate
