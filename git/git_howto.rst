@@ -2,6 +2,67 @@
 git howto
 =========
 
+Git repository structure
+________________________
+
+
+master (local): this is where development happens
+
+release0.1, release0.2, ... : for bugfixes and backports of certain releases
+
+github_master: latest stable release
+
+remotes/github/release0.1 ... latest bugfixes for a certain release on github 
+
+
+General release strategy
+________________________
+
+Progessing in a certain release
+-------------------------------
+
+    git checkout releaseX.Y
+    git merge master
+    vim VERSION
+    vim CHANGELOGg
+        
+    git add -i
+    git commit -am ""
+    
+    git checkout github_master
+    git merge --squash releaseX.Y # could be added--strategy-option theirs
+    
+    git commit -m "vX.Y"
+    git tag vX.Y -m "vX.Y"
+    
+    git push --tags github HEAD:master
+    
+    # git remote show
+    ?? git push github github_master
+
+    git checkout releaseX.Y
+    git merge github_master
+    git push --tags github HEAD:release0.1
+    ?? git push github releaseX.Y
+    
+    git checkout master
+    git merge releaseX.Y
+    ??git push github master
+
+
+
+Bugfixing release
+------------------
+
+Upgrading to new release
+-------------------------
+
+fixing last commits to release branch
+new major release tag
+
+
+
+
 Creating a repository
 _____________________
 
@@ -12,7 +73,7 @@ git repository initial preparations
     1 clone repository
     1 rename origin: git remote rename origin github
 
-    git checkout -b release1.0
+    git checkout -b release0.1
     
     git checkout -b github_master
     
@@ -36,6 +97,10 @@ git repository initial preparations
     vim .gitignore
     
     git add --all . ; git commit -am ""
+    
+    git checkout github_master
+    
+     git push github github_master:master
 
 git repo on local server
 ------------------------
@@ -188,9 +253,25 @@ clone the repository:
     
     git checkout github_master
     
+    git merge --squash release0.1
+    
+    git commit -m "v0.1.0"
+    
+    git tag v0.1.0 -m "v0.1.0"
+    
     git push --tags github HEAD:master # push the current branch’s HEAD to the master branch on the github remote.
     
+    git push origin github_master
+
+    git checkout release
+    git merge github_master
+    git push origin release
     
+    git checkout master
+    git merge release
+    git push origin master
+
+
     # adding local servers
     git remote add myserver git@our-git-server:repo.git
 
@@ -324,7 +405,68 @@ SUMMARY
 
 This style of development works nicely for us at Braintree and we were happy to find a git workflow to make it possible. It allows us to commit early and often between releases while keeping our public repositories on github clean and noise-free. We think it’s a testament to git’s power and flexibility that it is able to adapt itself to our working style so nicely.
 
+
+Git diff binary documents
+__________________________
+s. https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#Merge-Strategies
+
+You can’t directly compare two versions unless you check them out and scan them manually, right? It turns out you can do this fairly well using Git attributes. Put the following line in your .gitattributes file:
+
+*.docx diff=msword
+This tells Git that any file that matches this pattern (.docx) should use the “word” filter when you try to view a diff that contains changes. What is the “word” filter? You have to set it up. Here you’ll configure Git to use the docx2txt program to convert Word documents into readable text files, which it will then diff properly.
+
+First, you’ll need to install docx2txt; you can download it from http://docx2txt.sourceforge.net. Follow the instructions in the INSTALL file to put it somewhere your shell can find it. Next, you’ll write a wrapper script to convert output to the format Git expects. Create a file that’s somewhere in your path called docx2txt, and add these contents:
+
+#!/bin/bash
+docx2txt.pl $1 -
+Don’t forget to chmod a+x that file. Finally, you can configure Git to use this script:
+
+$ git config diff.msword.textconv docx2txt
+Now Git knows that if it tries to do a diff between two snapshots, and any of the files end in .docx, it should run those files through the “word” filter, which is defined as the docx2txt program. This effectively makes nice text-based versions of your Word files before attempting to diff them.
     
+    
+You can’t directly compare two versions unless you check them out and scan them manually, right? It turns out you can do this fairly well using Git attributes. Put the following line in your .gitattributes file:
+
+*.docx diff=word
+This tells Git that any file that matches this pattern (.docx) should use the “word” filter when you try to view a diff that contains changes. What is the “word” filter? You have to set it up. Here you’ll configure Git to use the docx2txt program to convert Word documents into readable text files, which it will then diff properly.
+
+First, you’ll need to install docx2txt; you can download it from http://docx2txt.sourceforge.net. Follow the instructions in the INSTALL file to put it somewhere your shell can find it. Next, you’ll write a wrapper script to convert output to the format Git expects. Create a file that’s somewhere in your path called docx2txt, and add these contents:
+
+#!/bin/bash
+docx2txt.pl $1 -
+Don’t forget to chmod a+x that file. Finally, you can configure Git to use this script:
+
+$ git config diff.word.textconv docx2txt
+Now Git knows that if it tries to do a diff between two snapshots, and any of the files end in .docx, it should run those files through the “word” filter, which is defined as the docx2txt program. This effectively makes nice text-based versions of your Word files before attempting to diff them.
+
+
+git merge strategies
+_____________________
+
+
+s. http://stackoverflow.com/questions/14275856/git-merging-but-overwriting-changes
+
+Say you are working in your local branch. Then you want to merge in what went in the master:
+
+git merge -X ours master
+On the other hand if you are in master and want to merge your local branch into master then @elhadi rightly says you should use theirs:
+
+git merge -X theirs somebranch
+
+keeping a certain local file during merge
+------------------------------------------
+
+
+accepted
+$ git config merge.ours.driver true
+or even
+
+$ git config --global merge.ours.driver true
+'ours' isn't one of the built-in merge drivers even though it's perfectly clear to you and me what it should do, and it seems git doesn't error out when a custom merge driver is undefined.
+
+(true above is just the unix true command, its success says it made the local version look right, in this case by doing nothing to it.)
+
+
     
 References
 __________

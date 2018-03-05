@@ -1,9 +1,23 @@
 
-# Yasara modelling
+Yasara modelling
+=================
 
-## Cleaning structure
+Preparing structure for modelling
+__________________________________
+
+Fixing residues
+----------------
+
+Changing Se-Met to Met:
+
+SwapRes Mse,Met,Isomer=L
+
+
+Cleaning structure
+-------------------
 
 Edit->Clean
+
 
 ## Simulation
 
