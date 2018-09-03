@@ -1,6 +1,67 @@
 linux shell scripts how-tos
 ===========================
 
+adding paths
+____________
+
+
+
+PATH=$PATH:~/opt/bin
+PATH=~/opt/bin:$PATH
+
+depending on whether you want to add ~/opt/bin at the end (to be searched after all other directories, in case there is a program by the same name in multiple directories) or at the beginning (to be searched before all other directories).
+
+You can add multiple entries at the same time. PATH=$PATH:~/opt/bin:~/opt/node/bin or variations on the ordering work just fine.
+
+You don't need export if the variable is already in the environment: any change of the value of the variable is reflected in the environment.¹ PATH is pretty much always in the environment; all unix systems set it very early on (usually in the very first process, in fact).
+
+If your PATH gets built by many different components, you might end up with duplicate entries. See How to add home directory path to be discovered by Unix which command? and Remove duplicate $PATH entries with awk command to avoid adding duplicates or remove them.
+
+Where to put it
+Note that ~/.bash_rc is not read by any program, and ~/.bashrc is the configuration file of interactive instances of bash. You should not define environment variables in ~/.bashrc. The right place to define environment variables such as PATH is ~/.profile (or ~/.bash_profile if you don't care about shells other than bash). See What's the difference between them and which one should I use?
+
+Notes on shells other than bash
+In bash, ksh and zsh, export is special syntax, and both PATH=~/opt/bin:$PATH and export PATH=~/opt/bin:$PATH do the right thing even. In other Bourne/POSIX-style shells such as dash (which is /bin/sh on many systems), export is parsed as an ordinary command, which implies two differences:
+
+~ is only parsed at the beginning of a word, except in assignments (see How to add home directory path to be discovered by Unix which command? for details);
+$PATH outside double quotes breaks if PATH contains whitespace or \[*?.
+So in shells like dash, export PATH=~/opt/bin:$PATH sets PATH to the literal string ~/opt/bin/: followed by the value of PATH up to the first space. PATH=~/opt/bin:$PATH (a bare assignment) doesn't require quotes and does the right thing. If you want to use export in a portable script, you need to write export PATH="$HOME/opt/bin:$PATH", or PATH=~/opt/bin:$PATH export PATH (or PATH=$HOME/opt/bin:$PATH export PATH for portability to even the Bourne shell that didn't accept export var=value and didn't do tilde expansion).
+
+Linux determines the executable search path with the $PATH environment variable. To add directory /data/myscripts to the beginning of the $PATH environment variable, use the following:
+PATH=/data/myscripts:$PATH
+To add that directory to the end of the path, use the following command:
+PATH=$PATH:/data/myscripts
+But the preceding are not sufficient because when you set an environment variable inside a script, that change is effective only within the script. There are only two ways around this limitation:
+If, within the script, you export the environment variable it is effective within any programs called by the script. Note that it is not effective within the program that called the script.
+If the program that calls the script does so by inclusion instead of calling, any environment changes in the script are effective within the calling program. Such inclusion can be done with the dot command or the source command. Examples:
+. $HOME/myscript.sh
+source $HOME/myscript.sh
+Inclusion basically incorporates the "called" script in the "calling" script. It's like a #include in C. So it's effective inside the "calling" script or program. But of course, it's not effective in any programs or scripts called by the calling program. To make it effective all the way down the call chain, you must follow the setting of the environment variable with an export command.
+
+As an example, the bash shell program incorporates the contents of file .bash_profile by inclusion. So putting the following 2 lines in .bash_profile:
+PATH=$PATH:/data/myscripts
+export PATH
+effectively puts those 2 lines of code in the bash program. So within bash the $PATH variable includes $HOME/myscript.sh, and because of the export statement, any programs called by bash have the altered $PATH variable. And because any programs you run from a bash prompt are called by bash, the new path is in force for anything you run from the bash prompt.
+
+The bottom line is that to add a new directory to the path, you must append or prepend the directory to the $PATH environment variable within a script included in the shell, and you must export the $PATH environnment variable. The only remaining question is: In which script do you place those two lines of code?
+Adding to a Single User's Path
+To add a directory to the path of a single user, place the lines in that user's .bash_profile file. Typically, .bash_profile already contains changes to the $PATH variable and also contains an export statement, so you can simply add the desired directory to the end or beginning of the existing statement that changes the $PATH variable. However, if .bash_profile doesn't contain the path changing code, simply add the following two lines to the end of the .bash_profile file:
+PATH=$PATH:/data/myscripts
+export PATH
+Adding to All Users' Paths (except root)
+You globally set a path in /etc/profile. That setting is global for all users except user root. Typical /etc/profile files extensively modify the $PATH variable, and then export that variable. What that means is you can modify the path by appending or prepending the desired directory(s) in existing statements modifying the path. Or, you can add your own path modification statements anywhere before the existing export statement. In the very unlikely event that there are no path modification or export statements in /etc/profile, you can insert the following 2 lines of code at the bottom of /etc/profile:
+
+PATH=$PATH:/data/myscripts
+export PATH
+Adding to the Path of User root
+User root is a special case, at least on Mandrake systems. Unlike other users, root is not affected by the path settings in /etc/profile. The reason is simple enough. User root's path is set from scratch by its .bash_profile script. In order to add to the path of user root, modify its .bash_profile.
+Summary
+A fundimental administration task is adding directories to the execution paths of one or more users. The basic code to do so is:
+PATH=$PATH:/data/myscripts
+export PATH
+Place that code, or whatever part of that code isn't already incorporated, in one of the following places:
+
+
 Fast file editing
 _________________
 
@@ -27,6 +88,12 @@ remove MDO_varioskan_ and _ from MDO_varioskan_0638_
     -i : in-place edit
 
     echo "This is just a test" | sed -e 's/ /_/g' -> This_is_just_a_test
+
+
+Comparing directories
+_____________________
+
+	diff -arq [folder1] [folder2]
 
 
 Mass Renaming files

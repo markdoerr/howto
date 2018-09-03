@@ -8,11 +8,11 @@ ________________________
 
 master (local): this is where development happens
 
-release0.1, release0.2, ... : for bugfixes and backports of certain releases
+v0.1_release, v0.2_release, ... : for bugfixes and backports of certain releases
 
 github_master: latest stable release
 
-remotes/github/release0.1 ... latest bugfixes for a certain release on github 
+remotes/github/v0.1_release ... latest bugfixes for a certain release on github 
 
 
 General release strategy
@@ -161,6 +161,22 @@ Deleting last changes
 .....................
 
     git reset --hard
+    
+    
+
+List all files tracked
+.......................
+
+
+If you want to list all the files currently being tracked under the branch master, you could use this command:
+
+	git ls-tree -r master --name-only
+
+If you want a list of files that ever existed (i.e. including deleted files):
+
+	git log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d'
+
+
 
 
 Working with branchs

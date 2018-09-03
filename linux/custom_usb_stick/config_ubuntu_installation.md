@@ -1,7 +1,11 @@
 
 
 # howto describing the procedure to generate a custom ubuntu system
-    last modified: 150517
+    last modified: 180903
+    
+##
+
+
     
 ## preperations
 
