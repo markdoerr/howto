@@ -170,11 +170,11 @@ List all files tracked
 
 If you want to list all the files currently being tracked under the branch master, you could use this command:
 
-	git ls-tree -r master --name-only
+    git ls-tree -r master --name-only
 
 If you want a list of files that ever existed (i.e. including deleted files):
 
-	git log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d'
+    git log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d'
 
 
 
@@ -481,6 +481,19 @@ $ git config --global merge.ours.driver true
 'ours' isn't one of the built-in merge drivers even though it's perfectly clear to you and me what it should do, and it seems git doesn't error out when a custom merge driver is undefined.
 
 (true above is just the unix true command, its success says it made the local version look right, in this case by doing nothing to it.)
+
+git working with remote branches
+__________________________________
+
+show all branches (including remotes)
+
+    git branch -r
+
+checking our remote branch as local
+
+    git checkout -b local_branch_name remotes/origin/remote_branch_name
+    
+
 
 
     
